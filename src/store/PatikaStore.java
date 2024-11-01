@@ -2,6 +2,7 @@ package store;
 
 import entity.brand.Brand;
 import entity.devices.MobilePhone;
+import entity.devices.Notebook;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -11,6 +12,7 @@ public class PatikaStore {
 
     public static Set<Brand> brands = new TreeSet<>();
     public static ArrayList<MobilePhone> mobilePhones = new ArrayList<>();
+    public static ArrayList<Notebook> notebooks = new ArrayList<>();
 
     static {
         brands.add(new Brand(1, "Samsung"));
@@ -26,6 +28,8 @@ public class PatikaStore {
 
     public PatikaStore() {
     }
+
+
 
     public static void printBrands(){
         for (Brand brand : brands){

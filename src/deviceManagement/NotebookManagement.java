@@ -1,20 +1,17 @@
 package deviceManagement;
 
 import entity.brand.Brand;
-import entity.devices.Device;
-import entity.devices.MobilePhone;
+import entity.devices.Notebook;
 import store.PatikaStore;
-
 
 import java.util.Scanner;
 
-public class MobilePhoneManagement implements Management{
-    private static int mobilePhoneIdCounter = 1;
-
+public class NotebookManagement implements Management{
+    private static int notebookIdCounter = 1;
     @Override
     public void addDevice() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the Mobile Phone infos:");
+        System.out.println("Enter the Notebook infos:");
 
         System.out.print("Price: ");
         double price = scanner.nextDouble();
@@ -34,73 +31,68 @@ public class MobilePhoneManagement implements Management{
         System.out.print("Brand: ");
         Brand brand = findBrandByName(scanner.nextLine());
 
-        System.out.print("Memory: ");
-        int memory = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Screen Size: ");
-        double screenSize = scanner.nextDouble();
-        scanner.nextLine();
-
-        System.out.print("Battery: ");
-        int battery = scanner.nextInt();
-        scanner.nextLine();
-
         System.out.print("RAM: ");
         int ram = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Colour: ");
-        String colour = scanner.nextLine();
+        System.out.print("Storage: ");
+        int storage = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Screen Size: ");
+        double screenSize = scanner.nextDouble();
 
         scanner.close();
 
-        MobilePhone phone = new MobilePhone(mobilePhoneIdCounter, price, discountRate, stockQuantity, deviceName, brand,
-                memory, screenSize, battery, ram, colour);
-        mobilePhoneIdCounter +=1;
+        Notebook notebook = new Notebook(notebookIdCounter, price, discountRate, stockQuantity, deviceName, brand,
+                ram, storage, screenSize);
+        notebookIdCounter +=1;
 
-        PatikaStore.mobilePhones.add(phone);
-        System.out.println("Mobile Phone added successfully.");
+        PatikaStore.notebooks.add(notebook);
+        System.out.println("Notebook added successfully.");
 
     }
 
     @Override
     public void listDeviceById(int id) {
         try{
-            for (MobilePhone mobilePhone : PatikaStore.mobilePhones){
-                if (mobilePhone.getId() == id){
-                    System.out.println(mobilePhone.toString());
+            for (Notebook notebook : PatikaStore.notebooks){
+                if (notebook.getId() == id){
+                    System.out.println(notebook.toString());
                 }
             }
         }
         catch (Exception e){
             System.out.println(e.toString());
         }
-
     }
 
     @Override
     public void listDeviceByName(String name) {
         try{
-            for (MobilePhone mobilePhone : PatikaStore.mobilePhones){
-                if (mobilePhone.getDeviceName().equals(name)){
-                    System.out.println(mobilePhone.toString());
+            for (Notebook notebook : PatikaStore.notebooks){
+                if (notebook.getDeviceName().equals(name)){
+                    System.out.println(notebook.toString());
                 }
             }
         }
         catch (Exception e){
             System.out.println(e.toString());
         }
-
     }
 
     @Override
     public void deleteDeviceByID(int id) {
-        for (MobilePhone mobilePhone : PatikaStore.mobilePhones){
-            if (mobilePhone.getId() == id){
-                System.out.println("Device deleted.");
-                PatikaStore.mobilePhones.remove(mobilePhone);
+        try{
+            for (Notebook notebook : PatikaStore.notebooks){
+                if (notebook.getId() == id){
+                    System.out.println("Device deleted.");
+                    PatikaStore.notebooks.remove(notebook);
+                }
             }
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
         }
     }
 
@@ -113,5 +105,4 @@ public class MobilePhoneManagement implements Management{
         }
         return null;
     }
-
 }

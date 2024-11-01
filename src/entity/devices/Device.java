@@ -76,7 +76,7 @@ public class Device {
                 ", discountRate=" + discountRate +
                 ", stockQuantity=" + stockQuantity +
                 ", deviceName='" + deviceName + '\'' +
-                ", brand=" + brand +
+                ", brand=" + brand.getName() +
                 '}';
     }
 }
