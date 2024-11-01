@@ -67,4 +67,16 @@ public class Device {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "id=" + id +
+                ", unitPrice=" + unitPrice +
+                ", discountRate=" + discountRate +
+                ", stockQuantity=" + stockQuantity +
+                ", deviceName='" + deviceName + '\'' +
+                ", brand=" + brand +
+                '}';
+    }
 }

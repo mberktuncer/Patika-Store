@@ -60,4 +60,15 @@ public class MobilePhone extends Device{
     public void setColour(String colour) {
         this.colour = colour;
     }
+
+    @Override
+    public String toString() {
+        return "MobilePhone{" +
+                "memory=" + memory +
+                ", screenSize=" + screenSize +
+                ", battery=" + battery +
+                ", ram=" + ram +
+                ", colour='" + colour + '\'' +
+                "} " + super.toString();
+    }
 }
