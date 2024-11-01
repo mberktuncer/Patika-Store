@@ -7,6 +7,7 @@ import entity.devices.MobilePhone;
 import java.util.ArrayList;
 
 public interface Management {
+    void manage();
 
     void addDevice();
     void listDeviceById(int id);

@@ -1,12 +1,13 @@
 package store;
 
+import deviceManagement.MobilePhoneManagement;
+import deviceManagement.NotebookManagement;
 import entity.brand.Brand;
 import entity.devices.MobilePhone;
 import entity.devices.Notebook;
 
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.TreeSet;
+import java.sql.SQLOutput;
+import java.util.*;
 
 public class PatikaStore {
 
@@ -29,7 +30,50 @@ public class PatikaStore {
     public PatikaStore() {
     }
 
+    public static void patikaStoreManagementPanel(){
 
+        NotebookManagement notebookManagement = new NotebookManagement();
+        MobilePhoneManagement mobilePhoneManagement = new MobilePhoneManagement();
+        Scanner scanner = new Scanner(System.in);
+
+        try{
+            System.out.println("Patika Store Product Management Panel !");
+            System.out.println("""
+                1- Notebook Management
+                2- Mobile Phone Management
+                3- List Brands
+                0- Exit
+                """);
+            int choice = scanner.nextInt();
+
+            switch (choice){
+                case 1:
+                    notebookManagement.manage();
+                    break;
+                case 2:
+                    mobilePhoneManagement.manage();
+                    break;
+                case 3:
+                    printBrands();
+                    patikaStoreManagementPanel();
+                    break;
+                case 0:
+                    System.out.println("You closed the app");
+                    break;
+                default:
+                    System.out.println("You entered invalid value !!!");
+                    patikaStoreManagementPanel();
+                    break;
+            }
+            scanner.close();
+
+        }
+        catch (InputMismatchException e){
+            System.out.println("Please enter a valid choice");
+        }
+
+
+    }
 
     public static void printBrands(){
         for (Brand brand : brands){
