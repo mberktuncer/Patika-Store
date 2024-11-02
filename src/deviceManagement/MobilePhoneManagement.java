@@ -1,8 +1,8 @@
 package deviceManagement;
 
 import entity.brand.Brand;
-import entity.devices.Device;
 import entity.devices.MobilePhone;
+import entity.devices.Notebook;
 import store.PatikaStore;
 
 
@@ -10,17 +10,19 @@ import java.util.Scanner;
 
 public class MobilePhoneManagement implements Management{
     private static int mobilePhoneIdCounter = 1;
+    Scanner scanner = new Scanner(System.in);
 
     @Override
     public void manage() {
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println("""
                 You are managing Mobile Phones.
                 1- Add a new Mobile Phone
                 2- List Mobile Phone by Id
                 3- List Mobile Phone by Name
                 4- Delete Mobile Phone by Id
-                5- Back to Main Menu
+                5- List All Mobile Phones
+                6- Back to Main Menu
                 """);
         int choice = scanner.nextInt();
 
@@ -47,6 +49,9 @@ public class MobilePhoneManagement implements Management{
                 deleteDeviceByID(deleteId);
                 break;
             case 5:
+                listAllDevice();
+                break;
+            case 6:
                 PatikaStore.patikaStoreManagementPanel();
                 break;
             default:
@@ -54,9 +59,6 @@ public class MobilePhoneManagement implements Management{
                 break;
         }
 
-        scanner.close();
-
-        manage();
     }
 
     @Override
@@ -101,8 +103,6 @@ public class MobilePhoneManagement implements Management{
         System.out.print("Colour: ");
         String colour = scanner.nextLine();
 
-        scanner.close();
-
         MobilePhone phone = new MobilePhone(mobilePhoneIdCounter, price, discountRate, stockQuantity, deviceName, brand,
                 memory, screenSize, battery, ram, colour);
         mobilePhoneIdCounter +=1;
@@ -110,6 +110,31 @@ public class MobilePhoneManagement implements Management{
         PatikaStore.mobilePhones.add(phone);
         System.out.println("Mobile Phone added successfully.");
 
+        manage();
+
+    }
+
+    @Override
+    public void listAllDevice() {
+        try{
+            System.out.println("Mobile Phone List");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            System.out.printf("| %-2s | %-30s | %-9s | %-10s | %-10s | %-9s | %-9s | %-9s | %-9s |\n",
+                    "ID", "Product Name", "Price", "Brand", "Memory", "Screen Size", "RAM", "Stock", "Colour");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+
+            for (MobilePhone mobilePhone : PatikaStore.mobilePhones) {
+                System.out.printf("| %-2d | %-30s | %-9.1f | %-10s | %-10d | %-9.1f | %-9d | %-9s | %-9s |\n",
+                        mobilePhone.getId(), mobilePhone.getDeviceName(), mobilePhone.getUnitPrice(), mobilePhone.getBrand().getName(),
+                        mobilePhone.getMemory(), mobilePhone.getScreenSize(), mobilePhone.getRam(), mobilePhone.getStockQuantity(), mobilePhone .getColour());
+            }
+
+            System.out.println("----------------------------------------------------------------------------------------------------");
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
+        manage();
     }
 
     @Override
@@ -124,6 +149,8 @@ public class MobilePhoneManagement implements Management{
         catch (Exception e){
             System.out.println(e.toString());
         }
+
+        manage();
 
     }
 
@@ -140,6 +167,8 @@ public class MobilePhoneManagement implements Management{
             System.out.println(e.toString());
         }
 
+        manage();
+
     }
 
     @Override
@@ -150,6 +179,9 @@ public class MobilePhoneManagement implements Management{
                 PatikaStore.mobilePhones.remove(mobilePhone);
             }
         }
+
+        manage();
+
     }
 
     @Override
@@ -159,7 +191,8 @@ public class MobilePhoneManagement implements Management{
                 return brand;
             }
         }
-        return null;
+        return new Brand(0, "Not Found Brand");
+
     }
 
 }

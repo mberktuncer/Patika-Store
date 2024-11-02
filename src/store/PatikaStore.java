@@ -42,9 +42,11 @@ public class PatikaStore {
                 1- Notebook Management
                 2- Mobile Phone Management
                 3- List Brands
+                4- List All Devices
                 0- Exit
                 """);
             int choice = scanner.nextInt();
+            System.out.println("Your choice: " + choice);
 
             switch (choice){
                 case 1:
@@ -57,6 +59,11 @@ public class PatikaStore {
                     printBrands();
                     patikaStoreManagementPanel();
                     break;
+                case 4:
+                    notebookManagement.listAllDevice();
+                    mobilePhoneManagement.listAllDevice();
+                    patikaStoreManagementPanel();
+                    break;
                 case 0:
                     System.out.println("You closed the app");
                     break;
@@ -65,7 +72,7 @@ public class PatikaStore {
                     patikaStoreManagementPanel();
                     break;
             }
-            scanner.close();
+
 
         }
         catch (InputMismatchException e){
@@ -76,8 +83,10 @@ public class PatikaStore {
     }
 
     public static void printBrands(){
+        System.out.println("Our Brands");
+        System.out.println("-----------");
         for (Brand brand : brands){
-            System.out.println(brand.toString());
+            System.out.println("- " + brand.getName());
         }
     }
 

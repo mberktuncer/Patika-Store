@@ -19,7 +19,8 @@ public class NotebookManagement implements Management{
                 2- List Notebook by Id
                 3- List Notebook by Name
                 4- Delete Notebook by Id
-                5- Back to Main Menu
+                5- List All Notebooks
+                6- Back to Main Menu
                 """);
         int choice = scanner.nextInt();
 
@@ -46,6 +47,9 @@ public class NotebookManagement implements Management{
                 deleteDeviceByID(deleteId);
                 break;
             case 5:
+                listAllDevice();
+                break;
+            case 6:
                 PatikaStore.patikaStoreManagementPanel();
                 break;
             default:
@@ -53,7 +57,6 @@ public class NotebookManagement implements Management{
                 break;
         }
 
-        scanner.close();
     }
 
     @Override
@@ -73,7 +76,7 @@ public class NotebookManagement implements Management{
         int stockQuantity = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Mobile Phone Name: ");
+        System.out.print("Notebook Model Name: ");
         String deviceName = scanner.nextLine();
 
         System.out.print("Brand: ");
@@ -90,8 +93,6 @@ public class NotebookManagement implements Management{
         System.out.print("Screen Size: ");
         double screenSize = scanner.nextDouble();
 
-        scanner.close();
-
         Notebook notebook = new Notebook(notebookIdCounter, price, discountRate, stockQuantity, deviceName, brand,
                 ram, storage, screenSize);
         notebookIdCounter +=1;
@@ -99,6 +100,31 @@ public class NotebookManagement implements Management{
         PatikaStore.notebooks.add(notebook);
         System.out.println("Notebook added successfully.");
 
+        manage();
+
+    }
+
+    @Override
+    public void listAllDevice() {
+        try{
+            System.out.println("Notebook List");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            System.out.printf("| %-2s | %-30s | %-9s | %-10s | %-10s | %-9s | %-9s | %-9s |\n",
+                    "ID", "Product Name", "Price", "Brand", "Storage", "Screen Size", "RAM", "Stock");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+
+            for (Notebook notebook : PatikaStore.notebooks) {
+                System.out.printf("| %-2d | %-30s | %-9.1f | %-10s | %-10d | %-9.1f | %-9d | %-9s |\n",
+                        notebook.getId(), notebook.getDeviceName(), notebook.getUnitPrice(), notebook.getBrand().getName(),
+                        notebook.getStorage(), notebook.getScreenSize(), notebook.getRam(), notebook.getStockQuantity());
+            }
+
+            System.out.println("----------------------------------------------------------------------------------------------------");
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
+        manage();
     }
 
     @Override
@@ -106,13 +132,14 @@ public class NotebookManagement implements Management{
         try{
             for (Notebook notebook : PatikaStore.notebooks){
                 if (notebook.getId() == id){
-                    System.out.println(notebook.toString());
+                    System.out.println(notebook);
                 }
             }
         }
         catch (Exception e){
             System.out.println(e.toString());
         }
+        manage();
     }
 
     @Override
@@ -127,6 +154,7 @@ public class NotebookManagement implements Management{
         catch (Exception e){
             System.out.println(e.toString());
         }
+        manage();
     }
 
     @Override
@@ -142,6 +170,8 @@ public class NotebookManagement implements Management{
         catch (Exception e){
             System.out.println(e.toString());
         }
+        manage();
+
     }
 
     @Override
@@ -151,6 +181,6 @@ public class NotebookManagement implements Management{
                 return brand;
             }
         }
-        return null;
+        return new Brand(0, "Not Found Brand");
     }
 }

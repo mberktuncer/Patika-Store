@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public interface Management {
     void manage();
-
     void addDevice();
+    void listAllDevice();
     void listDeviceById(int id);
     void listDeviceByName(String name);
     void deleteDeviceByID(int id);
